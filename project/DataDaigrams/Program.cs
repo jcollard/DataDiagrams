@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DataDaigrams
+namespace DataDiagrams
 {
     class MainClass
     {
