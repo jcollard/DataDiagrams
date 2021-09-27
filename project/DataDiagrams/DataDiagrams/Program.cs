@@ -8,16 +8,38 @@ namespace DataDiagrams
         public static int GetRandomNumber()
         {
             Random numberGenerator = new Random();
-            return numberGenerator.Next(0, 100);
+            int randomNumber = numberGenerator.Next(0, 100);
+            return randomNumber;
+        }
+
+        public static char GetRandomCharacter()
+        {
+            Random numberGenerator = new Random();
+            int randomNumber = numberGenerator.Next(65, 90);
+            char randomChar = (char)randomNumber;
+            return randomChar;
         }
 
         public static int GuessNumber()
         {
             Console.Write("Guess a number: ");
-            return Int32.Parse(Console.ReadLine());
+            int guess = Int32.Parse(Console.ReadLine());
+            return guess;
         }
 
-        public static void Main(string[] args)
+        public static char GuessChar()
+        {
+            Console.Write("Guess a character: ");
+            string userInput = Console.ReadLine().Trim().ToUpper();
+            if (userInput.Length == 1)
+            {
+                return userInput[0];
+            }
+            Console.WriteLine("Invalid input!");
+            return GuessChar();
+        }
+
+        public static void NumberGuessingGame()
         {
             int numberToGuess = GetRandomNumber();
             int numberOfGuesses = 0;
@@ -44,7 +66,41 @@ namespace DataDiagrams
             }
 
             Console.WriteLine($"It took you {numberOfGuesses} guesses to find my number.");
+        }
 
+        public static void CharacterGuessingGame()
+        {
+            char charToGuess = GetRandomCharacter();
+            int numberOfGuesses = 0;
+            char charGuessed = ' ';
+
+            Console.WriteLine("I'm thinking of a character between 'A' and 'Z'.");
+
+            while (charGuessed != charToGuess)
+            {
+                charGuessed = GuessChar();
+                numberOfGuesses = numberOfGuesses + 1;
+                if (charGuessed == charToGuess)
+                {
+                    Console.WriteLine("That's correct!");
+                }
+                else if (charGuessed < charToGuess)
+                {
+                    Console.WriteLine($"My character comes after '{charGuessed}'.");
+                }
+                else
+                {
+                    Console.WriteLine($"My character comes before '{charGuessed}'.");
+                }
+            }
+
+            Console.WriteLine($"It took you {numberOfGuesses} guesses to find my character.");
+
+        }
+
+        public static void Main(string[] args)
+        {
+            CharacterGuessingGame();
         }
     }
 
