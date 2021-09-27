@@ -1,4 +1,7 @@
-# 5211
+# 5211 2 Player Board State Protocol
+
+In this document, we define a protocol for digitally representing the state of a
+2 player game of 5-2-1-1.
 
 ## Card
 
@@ -10,7 +13,7 @@ card.
 The color value is enumerated in the following order:
 
 ```
-0. Yellow    (0b0000)
+0. Yellow (0b0000)
 1. Green  (0b0001)
 2. Blue   (0b0010)
 3. Orange (0b0011)
@@ -65,8 +68,8 @@ card has not yet been played in one of the positions, that is represented as
   Orange 3 is in play face-down.
 * `0x0101_0125_0134_0006` - A Yellow 1, a Blue 5, and an Orange 3 are in play
   face-up and a Yellow 6 is in play face-down.
-* `0x0101_0125_0134_0106` - A Yellow 1, Blue 5, an Orange 3, and a Yellow 6 are in
-  play face-up.
+* `0x0101_0125_0134_0106` - A Yellow 1, Blue 5, an Orange 3, and a Yellow 6 are
+  in play face-up.
 
 ## 2 Player Board State
 
@@ -78,12 +81,6 @@ players. This is represented using 32 bytes.
 * The third 8 bytes is the second player's hand
 * The fourth 8 bytes is the second player's board
 
-### Examples
-0. Yellow    (0b0000)
-1. Green  (0b0001)
-2. Blue   (0b0010)
-3. Orange (0b0011)
-4. Black  (0b0100)
 #### Player 1's Board / Hand
 ![Player 1's Board / Hand](images/player1.jpg)
 
