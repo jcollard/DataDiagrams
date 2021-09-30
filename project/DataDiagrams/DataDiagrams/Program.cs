@@ -100,7 +100,9 @@ namespace DataDiagrams
 
         public static void Main(string[] args)
         {
-            CharacterGuessingGame();
+            //CharacterGuessingGame();
+            ByteWriter bw = new ByteWriter("/Users/jcollard/git/ap-compsci-2021-2022/project_ideas/DataDiagrams/project/DataDiagrams/DataDiagrams/testfile.5211");
+            bw.WriteByte("Test");
         }
     }
 
