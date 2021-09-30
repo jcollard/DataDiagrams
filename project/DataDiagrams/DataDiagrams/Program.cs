@@ -5,114 +5,46 @@ namespace DataDiagrams
     class MainClass
     {
 
-        public static int GetRandomNumber()
-        {
-            Random numberGenerator = new Random();
-            int randomNumber = numberGenerator.Next(0, 100);
-            return randomNumber;
-        }
-
-        public static char GetRandomCharacter()
-        {
-            Random numberGenerator = new Random();
-            int randomNumber = numberGenerator.Next(65, 90);
-            char randomChar = (char)randomNumber;
-            return randomChar;
-        }
-
-        public static int GuessNumber()
-        {
-            Console.Write("Guess a number: ");
-            int guess = Int32.Parse(Console.ReadLine());
-            return guess;
-        }
-
-        public static char GuessChar()
-        {
-            Console.Write("Guess a character: ");
-            string userInput = Console.ReadLine().Trim().ToUpper();
-            if (userInput.Length == 1)
-            {
-                return userInput[0];
-            }
-            Console.WriteLine("Invalid input!");
-            return GuessChar();
-        }
-
-        public static void NumberGuessingGame()
-        {
-            int numberToGuess = GetRandomNumber();
-            int numberOfGuesses = 0;
-            int numberGuessed = -1;
-
-            Console.WriteLine("I'm thinking of a number between 0 and 100.");
-
-            while (numberGuessed != numberToGuess)
-            {
-                numberGuessed = GuessNumber();
-                numberOfGuesses = numberOfGuesses + 1;
-                if (numberGuessed == numberToGuess)
-                {
-                    Console.WriteLine("That's correct!");
-                }
-                else if (numberGuessed < numberToGuess)
-                {
-                    Console.WriteLine("Your guess is too low.");
-                }
-                else
-                {
-                    Console.WriteLine("Your guess is too high.");
-                }
-            }
-
-            Console.WriteLine($"It took you {numberOfGuesses} guesses to find my number.");
-        }
-
-        public static void CharacterGuessingGame()
-        {
-
-            char charToGuess = GetRandomCharacter();
-            int numberOfGuesses = 0;
-            char charGuessed = ' ';
-
-            Console.WriteLine("I'm thinking of a character between 'A' and 'Z'.");
-
-            while (charGuessed != charToGuess)
-            {
-                charGuessed = GuessChar();
-                numberOfGuesses = numberOfGuesses + 1;
-                if (charGuessed == charToGuess)
-                {
-                    Console.WriteLine("That's correct!");
-                }
-                else if (charGuessed < charToGuess)
-                {
-                    Console.WriteLine($"My character comes after '{charGuessed}'.");
-                }
-                else
-                {
-                    Console.WriteLine($"My character comes before '{charGuessed}'.");
-                }
-            }
-
-            Console.WriteLine($"It took you {numberOfGuesses} guesses to find my character.");
-
-        }
-
         public static void Main(string[] args)
         {
             //String rootDir = "/d/git/ap-compsci-2021-2022/project_ideas/DataDiagrams/project/DataDiagrams/";
-            String rootDir = @"D:\git\ap-compsci-2021-2022\project_ideas\DataDiagrams\project\DataDiagrams\";
+            String rootDir = @"D:\git\ap-compsci-2021-2022\project_ideas\DataDiagrams\project\test_data\";
             //CharacterGuessingGame();
-            ByteWriter bw = new ByteWriter(rootDir + "testfile.5211", true);
-            bw.WriteByte(0x01);
-            bw.WriteByte(0x23);
-            bw.WriteByte(0x45);
-            bw.WriteByte(0x67);
-            bw.WriteByte(0x89);
-            bw.WriteByte(0xAB);
-            bw.WriteByte(0xCD);
-            bw.WriteByte(0xEF);
+            
+
+            FiveTwoOneOneDecoder decoder = new FiveTwoOneOneDecoder();
+
+            Console.WriteLine(decoder.DecodeColor(0x00));
+            Console.WriteLine(decoder.DecodeColor(0x11));
+            Console.WriteLine(decoder.DecodeColor(0x22));
+            Console.WriteLine(decoder.DecodeColor(0x33));
+            Console.WriteLine(decoder.DecodeColor(0x44));
+
+            Console.WriteLine(decoder.DecodeCard(0x01));
+            Console.WriteLine(decoder.DecodeCard(0x25));
+            Console.WriteLine(decoder.DecodeCard(0x34));
+            Console.WriteLine(decoder.DecodeCard(0x16));
+            Console.WriteLine(decoder.DecodeCard(0x61));
+
+            byte[] hand = { 0x00, 0x00, 0x00, 0x01, 0x25, 0x34, 0x31, 0x43 };
+
+            Console.WriteLine(decoder.DecodeHand(hand));
+
+            byte[] board = { 0x00, 0x01, 0x00, 0x25, 0x00, 0x00, 0x00, 0x00 };
+            Console.WriteLine(decoder.DecodeBoard(board));
+
+            byte[] playerBoard = { 0x00, 0x00, 0x00, 0x01, 0x25, 0x34, 0x31, 0x43, 0x00, 0x01, 0x00, 0x25, 0x00, 0x00, 0x00, 0x00 };
+
+            Console.WriteLine(decoder.DecodePlayer("Player 1", playerBoard));
+
+            ByteReader br = new ByteReader(rootDir + "playerBoard.5211");
+
+            byte[] playerBoard2 = br.ReadBytes(16);
+            Console.WriteLine(decoder.DecodePlayer("Player 1", playerBoard2));
+
+            br = new ByteReader(rootDir + "twoPlayerBoard.5211");
+            byte[] playerBoards = br.ReadBytes(32);
+            Console.WriteLine(decoder.DecodeTwoPlayer(playerBoards));
 
         }
     }

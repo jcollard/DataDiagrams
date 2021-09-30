@@ -18,14 +18,19 @@ namespace DataDiagrams
 
         }
 
-        public byte ReadByte()
+        public byte[] ReadBytes(int length)
         {
-            int data = reader.ReadByte();
-            if(data == -1)
+            byte[] data = new byte[length];
+            for(int ix = 0; ix < length; ix++)
             {
-                throw new EndOfStreamException("The end of the file has been reached.");
+                int d = reader.ReadByte();
+                if(d == -1)
+                {
+                    throw new EndOfStreamException($"The end of the file has been reached. Read {ix} bytes but expected {length}.");
+                }
+                data[ix] = (byte)d;
             }
-            return (byte)data;
+            return data;
         }
 
     }
