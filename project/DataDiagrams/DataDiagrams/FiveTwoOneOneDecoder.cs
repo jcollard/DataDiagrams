@@ -4,42 +4,17 @@ namespace DataDiagrams
     public class FiveTwoOneOneDecoder
     {
 
-        public byte[] GetBytes(byte[] data, int startIx, int length)
-        {
-            byte[] subarray = new byte[length];
-            for(int ix = 0; ix < length; ix++)
-            {
-                subarray[ix] = data[ix + startIx];
-            }
-            return subarray;
-        }
-
-        public byte GetTopNibble(byte data)
-        {
-            return (byte)(data >> 4);
-        }
-
-        public byte GetBottomNibble(byte data)
-        {
-            return (byte)(data & 0xF0);
-        }
-
-        public String ToHex(byte data)
-        {
-            return "0x" + data.ToString("X2");
-        }
-
         public String DecodeTwoPlayer(byte[] data)
         {
-            String playerOne = DecodePlayer("Player 1", GetBytes(data, 0, 16));
-            String playerTwo = DecodePlayer("Player 2", GetBytes(data, 16, 16));
+            String playerOne = DecodePlayer("Player 1", Support.GetBytes(data, 0, 16));
+            String playerTwo = DecodePlayer("Player 2", Support.GetBytes(data, 16, 16));
             return $"{playerOne}\n{playerTwo}";
         }
 
         public String DecodePlayer(String label, byte[] data)
         {
-            String hand = DecodeHand(GetBytes(data, 0, 8));
-            String board = DecodeBoard(GetBytes(data, 8, 8));
+            String hand = DecodeHand(Support.GetBytes(data, 0, 8));
+            String board = DecodeBoard(Support.GetBytes(data, 8, 8));
             return $"{label} Hand: {hand}\n{label} Board: {board}";
         }
 
@@ -78,23 +53,20 @@ namespace DataDiagrams
                 return "Face Up";
             }
 
-            return $"Invalid Card State {ToHex(cardState)}";
+            return $"Invalid Card State {Support.ToHex(cardState)}";
         }
 
         public String DecodeCard(byte cardData)
         {
-            byte value = (byte)((cardData & 0b0000_1111));
-            if (value < 1 || value > 6)
-            {
-                return $"Invalid Card Value {ToHex(value)}";
-            }
-            return $"{DecodeColor(cardData)} {value}";
+            byte value = Support.GetBottomNibble(cardData);
+            String color = DecodeColor(cardData);
+            return $"{color} {value}";
         }
 
 
         public String DecodeColor(byte cardData)
         {
-            byte color = GetTopNibble(cardData);
+            byte color = Support.GetTopNibble(cardData);
             if(color == 0)
             {
                 return "Yellow";
@@ -120,7 +92,7 @@ namespace DataDiagrams
                 return "Black";
             }
 
-            return $"Invalid Color \"{ToHex(cardData)}\"";
+            return $"Invalid Color \"{Support.ToHex(cardData)}\"";
 
         }
 

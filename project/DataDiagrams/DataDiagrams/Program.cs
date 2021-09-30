@@ -7,10 +7,6 @@ namespace DataDiagrams
 
         public static void Main(string[] args)
         {
-            //String rootDir = "/d/git/ap-compsci-2021-2022/project_ideas/DataDiagrams/project/DataDiagrams/";
-            String rootDir = @"D:\git\ap-compsci-2021-2022\project_ideas\DataDiagrams\project\test_data\";
-            //CharacterGuessingGame();
-            
 
             FiveTwoOneOneDecoder decoder = new FiveTwoOneOneDecoder();
 
@@ -33,17 +29,15 @@ namespace DataDiagrams
             byte[] board = { 0x00, 0x01, 0x00, 0x25, 0x00, 0x00, 0x00, 0x00 };
             Console.WriteLine(decoder.DecodeBoard(board));
 
-            byte[] playerBoard = { 0x00, 0x00, 0x00, 0x01, 0x25, 0x34, 0x31, 0x43, 0x00, 0x01, 0x00, 0x25, 0x00, 0x00, 0x00, 0x00 };
+            byte[] playerBoard = { 0x00, 0x00, 0x00, 0x01, 0x25, 0x34, 0x31, 0x43,
+                                   0x00, 0x01, 0x00, 0x25, 0x00, 0x00, 0x00, 0x00 };
 
             Console.WriteLine(decoder.DecodePlayer("Player 1", playerBoard));
 
-            ByteReader br = new ByteReader(rootDir + "playerBoard.5211");
-
-            byte[] playerBoard2 = br.ReadBytes(16);
+            byte[] playerBoard2 = Support.ReadBytes("playerBoard.5211", 16);
             Console.WriteLine(decoder.DecodePlayer("Player 1", playerBoard2));
 
-            br = new ByteReader(rootDir + "twoPlayerBoard.5211");
-            byte[] playerBoards = br.ReadBytes(32);
+            byte[] playerBoards = Support.ReadBytes("twoPlayerBoard.5211", 32);
             Console.WriteLine(decoder.DecodeTwoPlayer(playerBoards));
 
         }
