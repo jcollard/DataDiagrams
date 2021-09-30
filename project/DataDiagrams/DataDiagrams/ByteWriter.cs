@@ -14,26 +14,22 @@ namespace DataDiagrams
                 if (overwrite == false)
                 {
                     throw new IOException($"The filespecified \"{filename}\" already exists.");
-                } else
+                }
+                else
                 {
                     Console.WriteLine($"Deleting \"${filename}\".");
                     File.Delete(filename);
                 }
-            } 
-            writer = new FileStream(filename, FileMode.Create);
-            
-        }
-
-        public bool WriteByte(String byteString)
-        {
-            if(byteString.Length != 2)
-            {
-                throw new ArgumentException($"\"{byteString}\" is an invalid byte string.");
             }
-            writer.WriteByte(7);
-            writer.Flush();
-            return true;
+            writer = new FileStream(filename, FileMode.Create);
+
         }
 
+        public void WriteByte(byte toWrite)
+        {
+            writer.WriteByte(toWrite);
+            writer.Flush();
+        }
     }
+
 }

@@ -70,6 +70,7 @@ namespace DataDiagrams
 
         public static void CharacterGuessingGame()
         {
+
             char charToGuess = GetRandomCharacter();
             int numberOfGuesses = 0;
             char charGuessed = ' ';
@@ -100,9 +101,19 @@ namespace DataDiagrams
 
         public static void Main(string[] args)
         {
+            //String rootDir = "/d/git/ap-compsci-2021-2022/project_ideas/DataDiagrams/project/DataDiagrams/";
+            String rootDir = @"D:\git\ap-compsci-2021-2022\project_ideas\DataDiagrams\project\DataDiagrams\";
             //CharacterGuessingGame();
-            ByteWriter bw = new ByteWriter("/Users/jcollard/git/ap-compsci-2021-2022/project_ideas/DataDiagrams/project/DataDiagrams/DataDiagrams/testfile.5211");
-            bw.WriteByte("Test");
+            ByteWriter bw = new ByteWriter(rootDir + "testfile.5211", true);
+            bw.WriteByte(0x01);
+            bw.WriteByte(0x23);
+            bw.WriteByte(0x45);
+            bw.WriteByte(0x67);
+            bw.WriteByte(0x89);
+            bw.WriteByte(0xAB);
+            bw.WriteByte(0xCD);
+            bw.WriteByte(0xEF);
+
         }
     }
 
