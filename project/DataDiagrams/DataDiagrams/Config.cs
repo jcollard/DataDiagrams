@@ -13,7 +13,8 @@ namespace DataDiagrams
         public String GetProjectDirectory()
         {
             //TODO: Update this 
-            return "/Users/jcollard/git/ap-compsci-2021-2022/project_ideas/DataDiagrams/project/";
+            //return "/Users/jcollard/git/ap-compsci-2021-2022/project_ideas/DataDiagrams/project/";
+            return @"D:\git\ap-compsci-2021-2022\project_ideas\DataDiagrams\project";
         }
 
         public IFiveTwoOneOneDecoder GetDecoder()

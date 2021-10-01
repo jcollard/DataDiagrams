@@ -4,10 +4,10 @@ namespace DataDiagrams
     public class FiveTwoOneOneDecoder : IFiveTwoOneOneDecoder
     {
 
-        public String DecodeTwoPlayer(byte[] data)
+        public String DecodeTwoPlayer(String player1Label, String player2Label, byte[] data)
         {
-            String playerOne = DecodePlayer("Player 1", Support.GetBytes(data, 0, 16));
-            String playerTwo = DecodePlayer("Player 2", Support.GetBytes(data, 16, 16));
+            String playerOne = DecodePlayer(player1Label, Support.GetBytes(data, 0, 16));
+            String playerTwo = DecodePlayer(player2Label, Support.GetBytes(data, 16, 16));
             return $"{playerOne}\n{playerTwo}";
         }
 
@@ -25,14 +25,14 @@ namespace DataDiagrams
 
         public String DecodeBoard(byte[] data)
         {
-            String first = DecodePair(data[0], data[1]);
-            String second = DecodePair(data[2], data[3]);
-            String third = DecodePair(data[4], data[5]);
-            String fourth = DecodePair(data[6], data[7]);
+            String first = DecodeCardPair(data[0], data[1]);
+            String second = DecodeCardPair(data[2], data[3]);
+            String third = DecodeCardPair(data[4], data[5]);
+            String fourth = DecodeCardPair(data[6], data[7]);
             return $"{first}, {second}, {third}, {fourth}";
         }
 
-        public String DecodePair(byte cardState, byte cardData)
+        public String DecodeCardPair(byte cardState, byte cardData)
         {
             if(cardData == 0)
             {
@@ -58,7 +58,7 @@ namespace DataDiagrams
 
         public String DecodeCard(byte cardData)
         {
-            byte value = Support.GetBottomNibble(cardData);
+            String value = DecodeValue(cardData);
             String color = DecodeColor(cardData);
             return $"{color} {value}";
         }
@@ -92,10 +92,44 @@ namespace DataDiagrams
                 return "Black";
             }
 
-            return $"Invalid Color \"{Support.ToHex(cardData)}\"";
+            return $"Invalid Color ({Support.ToHex(cardData)})";
 
         }
 
+        public String DecodeValue(byte cardData)
+        {
+            byte value = Support.GetBottomNibble(cardData);
+            if (value == 1)
+            {
+                return "Rooster";
+            }
 
+            if (value == 2)
+            {
+                return "Two";
+            }
+
+            if (value == 3)
+            {
+                return "Three";
+            }
+
+            if (value == 4)
+            {
+                return "Four";
+            }
+
+            if (value == 5)
+            {
+                return "Five";
+            }
+
+            if (value == 6)
+            {
+                return "Six";
+            }
+
+            return $"Invalid Value \"{Support.ToHex(cardData)}\"";
+        }
     }
 }
