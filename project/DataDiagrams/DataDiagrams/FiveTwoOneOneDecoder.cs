@@ -1,7 +1,7 @@
 ﻿using System;
 namespace DataDiagrams
 {
-    public class FiveTwoOneOneDecoder
+    public class FiveTwoOneOneDecoder : IFiveTwoOneOneDecoder
     {
 
         public String DecodeTwoPlayer(byte[] data)
