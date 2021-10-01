@@ -10,8 +10,6 @@ namespace DataDiagrams
 
             FiveTwoOneOneDecoder decoder = new FiveTwoOneOneDecoder();
 
-
-
             //Console.WriteLine(decoder.DecodeColor(0x00));
             //Console.WriteLine(decoder.DecodeColor(0x11));
             //Console.WriteLine(decoder.DecodeColor(0x22));
